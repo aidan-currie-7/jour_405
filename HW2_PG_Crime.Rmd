@@ -1,0 +1,83 @@
+---
+title: "HW2 Prince George's County Crime"
+---
+
+In this assignment, we will be working with a dataset reporting the number of crimes by month in Prince George's County, Maryland, for every month in 2024. 
+
+### Task 1: Load the Tidyverse
+
+You will need to load the tidyverse library
+
+```{r}
+library(tidyverse)
+```
+
+Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv. You will create a dataframe called `pg_crime` that contains the data from this URL.
+
+### Task 2: Load the Data and Describe It
+
+```{r}
+pg_crime <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv")
+```
+### Task 3: Describe the Data
+
+You should examine that dataframe carefully by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the categories of incidents. From a reporting standpoint, are any of the categories more important than others? Why or why not? Do any of them make the job of summarizing the data more difficult? Why or why not?
+
+ANSWER HERE:The data set includes 18 different categories, but many of those can be looped into more general groups: assault, auto theft, breaking and entering, robberies, etc. From a general reporting standpoint, I'd say homicide, sex offense, and the three assault categories are the "most important" because they refer to crimes that harm other people, and thus could be grounds for human interest stories. On first look at this specific data set, the categories that stand out to me most are "AUTO STOLEN" and "AUTO STOLEN RECOVERED," largely because I think we hear a lot about car thefts near and around campus. Overall, I wouldn't say any of the categories make it more difficult to summarize the data because, aside from "HOMICIDE" and "SEX OFFENSE,” most of the categories can be looked at with the context of other similar categories.
+
+### Task 4: Calculating Averages
+
+Calculate the total number of incidents per month for each category using `mutate()`, calling the new column `total_incidents`. Then calculate the average number of incidents per month for each category of crime, calling the new column `average_incidents`. Assign the result to a new dataframe called `pg_crime_averages`.
+
+```{r}
+total_incidents <- pg_crime |>  mutate(total_incidents =  rowSums(across(2:13)))
+
+pg_crime_averages <- total_incidents |> mutate(average_incidents = total_incidents / 12)
+```
+
+### Task 5: Describe the Averages
+
+Examine the new dataframe, `pg_crime_averages`, by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the average number of incidents per month for each category. Which categories have the highest average number of incidents per month? Which have the lowest? What does this tell you about the pattern of crime in Prince George's County? Are there categories that you have questions about? Why or why not?
+
+ANSWER HERE:
+The highest average incident per month in PG County was accidents (presumably car/auto accidents) -- around 481 occurred per month. Additional incidents like Stolen Auto and Theft from Auto also tallied very high counts per month. Crimes against other individuals (homicide and sex offenses, in particular) occurred less frequently, although assault was recorded at a relatively high rate (in comparison to some of the other violent crimes) of 70.9 times per month. Overall, this feels fairly normal since violent crimes occur far less frequently than non-violent incidents, and that same tendency evidently tracks in PG County. The only category that I have a curiosity about is the B&E COMMERCIAL category, since I noticed a significant spike in December; I was wondering if there tends to be more store break-ins everywhere during the holiday season, or if that is just a weird coincidence.
+
+### Task 6: Testing a Theory
+
+One theory about crime is that it is more likely to occur in the summer months. Test this theory by creating three new columns using `mutate()` that calculate the percentage change compared to the average for each category of crime for the months of June, July, and August. Call the new columns `june_change`, `july_change`, and `august_change`. Assign the result to a new dataframe called `summer_crime_averages`.
+
+```{r}
+summer_crime_averages <- pg_crime_averages |> mutate(june_change = (Jun - average_incidents)/average_incidents * 100)
+
+summer_crime_averages <- pg_crime_averages |> mutate(jul_change = (Jul - average_incidents)/average_incidents * 100)
+
+summer_crime_averages <- pg_crime_averages |> mutate(aug_change = (Aug - average_incidents)/average_incidents * 100)
+
+```
+
+### Task 7: Describe the Summer Crime Averages
+
+Look at the `summer_crime_averages` dataframe by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the percentage change in the average number of incidents per month for each category of crime for the months of June, July, and August. Do you see any patterns? What does this tell you about the theory that crime is more likely to occur in the summer months?
+
+ANSWER HERE:
+June categories generally saw an increase in crimes per month as compared to the monthly averages, though there were a few exceptions (B&E Other, Commercial Robbery, Assaults, Accidents, etc.). Nevertheless, in June, 11 of the 18 categories saw percent increases from their monthly averages, with seven of those categories seeing increases north of 10%. 
+
+As for July, crime averages take a dip, with over half of the categories seeing frequencies below their yearly averages. B&E Other, Assaults, and Accidents once again fall into this category. Vehicular crimes once again stay relatively high, with Vehicle Robbery (64.5% increase from the monthly average), Stolen & Recovered Auto (42.9% increase from the monthly average), and Theft from Auto (14.6% increase from the monthly average) all seeing noteworthy percentage rises. 
+
+August is similar to July in the sense that generally, crime percentages are lower than their monthly category averages, but the categories themselves are a bit peculiar. Vehicle Robberies were relatively high in both June and July, but that trend reversed in August, with a 15.7% decrease from the monthly average. A similar pattern also occurred with Sex Offenses being relatively low in August. Conversely, Shooting Assaults were relatively low in June, but spiked in July, and even more so in August. 
+
+Overall, the data is more scattered than I expected, with there being significant month-to-month changes in certain categories. But overall, I think the data would reject the theory that crime is more likely to occur during the summer, since there's ultimately a fair amount of month-to-month volatility. I also think you would need several years (or even a decade) worth of data to properly evaluate whether or not crime is more frequent during the summer.  
+
+### Task 8: What's the Story?
+
+Write up a lede and nutgraf of a story focused on the crime data in Prince George's County. It could be from any of the dataframes you've created in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
+
+ANSWER HERE: 
+
+Auto-related crimes and incidents were chronic across Prince George's County in 2024.
+
+Based on a data set of last year's crime figures, the four most common incidents across the county were all associated with cars or other types of automotive vehicles. Two of those categories are related to auto accidents, while the other two account for theft -- whether that be items stolen from cars, or stolen vehicles themselves. Nevertheless, a combined 19,118 incidents were tracked across those four groups, making up a stagerring 71.5% of the over 26,000 total incidents noted in 2024's data sheet.
+
+### Task 9: Save Your Work and Put it on GitHub
+
+Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
