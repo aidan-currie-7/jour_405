@@ -1,0 +1,136 @@
+---
+title: "Data Distribution, Volleyball Percentiles, Car Thefts, "
+author: "Derek Willis /Rob Wells"
+date: 09-23-2025
+---
+
+This workbook contains three exercises for our class. Complete them and hand it in at the end of class via a GitHub link.
+
+Your name: Aidan Currie
+**Answer**
+
+#------------------------------------------------------------------------------#
+
+
+# Part 1: When Data Isn't Normal
+
+Working in pairs, consider the following question: "Why do many statistical methods assume a normal distribution, and what challenges arise when data does not meet this assumption?"
+
+First, come up with two examples of data that might not be normally distributed - in other words, that could be skewed or unequal in some way - and explain why they wouldn't be normally distributed. Feel free to draw what you think the distribution would look like.
+
+Then, how should a reporter working on a story about data that isn't normally distributed describe that data? Which statistical measures that we've covered in class should they use or avoid when doing so? Use the examples you came up with, and you should discuss your answers together, but each student submits separately.
+
+**Your answer**:
+A handful of sports statistics usually don't see normal distribution. For example, a data set depicting the total number of hits that each offensive player in MLB has this season, would probably see some degree of skew because there are around 450 offensive players in the league; the guys at the top of the list are significantly better hitters than guys at the bottom, and there's a plethora of guys who only have a handful of at-bats, which can certainly skew the set. A similar principle applies for NFL quarterbacks and total passing yards for each oone over the course of a season. The portion of below-average quarterbacks who don't have as mcuh playing time, may skew this data set to the left as well. 
+
+When working with a data set like the ones mentioned above, we think it's important to note the number of players who haven't played a full season. In the baseball example, I think it makes sense tocreate two data sets -- one for every offensive player that has gotten an at-bat, and one that one only accounts for guys who have a certain number of plate apperances (based on a rough estimate, this plate-apperance threshold could be around 500). Similarly, in football I think it makes sense to make two different data sets, one that depicts every quarterback to throw a pass, and another for quarterbacks who've met a threshold for total passes attempted.  
+
+#------------------------------------------------------------------------------#
+
+
+# Part 2: Volleyball Percentiles
+
+We'll be calculating percentiles to see how good Maryland was in service aces in the 2024 season. We'll use `mutate()` and a new function `ntile()` to calculate percentiles. Get started by loading the tidyverse in a code block, then load the CSV file here: https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/refs/heads/main/data/ncaa_womens_volleyball_matchstats_2024.csv" and save it to a dataframe called `matches`.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+### Task 2: Load the data
+
+```{r}
+matches <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/refs/heads/main/data/ncaa_womens_volleyball_matchstats_2024.csv")
+```
+
+### Task 3: Create totals of aces for each team using `group_by()` and `summarize()`
+
+```{r}
+team_aces <- matches |> 
+  group_by(team) |> 
+  summarize(total_aces = sum(aces)) |> 
+  arrange(desc(total_aces))
+```
+
+
+### Task 4: Calculate percentiles using `mutate()` and `ntile()`
+
+```{r}
+team_aces |> mutate(percentile = ntile(total_aces, 100))
+```
+
+
+### Task 5: Describe the percentiles
+
+Write a couple of sentences that puts Maryland into context with the other teams in the dataset. You can do some Internet research to help with this.
+
+**Answer**:
+
+There are 344 D1 women's volleyball teams, all but one of those are represented in this data set. With 223 aces, Maryland volley is in the 95th percentile of D1 programs. Going off percentile, Maryland ranks just behind Pittsburgh, as the second-best power-4 school in the country. The Terps are also the highest-percentile Big Ten, with the next-closest being Penn State, which posted 203 service aces to put it in the 87th percentile.    
+
+#------------------------------------------------------------------------------#
+
+# Part 3: Car Thefts
+
+Follow along with the demo to learn how to calculate standard deviation and how to create a histogram of the data using R and the Tidyverse. Get started by loading the tidyverse in a new R block.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+
+### Task 2: Load the car thefts dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/car_thefts_jan24.csv
+
+
+```{r}
+car_thefts <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/car_thefts_jan24.csv")
+```
+
+### Task 3: Calculate the standard deviation of the number of car thefts, along with the mean
+
+```{r}
+car_thefts |> summarize(mean = mean(count), sd = sd(count))
+```
+
+
+### Task 4: Create a histogram of the number of car thefts
+
+
+```{r}
+car_thefts |> 
+  ggplot() + 
+  geom_histogram(aes(x = count), binwidth = 2)
+```
+
+
+
+
+### Task 5: Add a line to the histogram that shows the mean of the number of car thefts, and two other lines to show one standard deviation in both directions
+
+```{r}
+car_thefts |> 
+  ggplot() + 
+  geom_histogram(aes(x = count), binwidth = 2) +
+  geom_vline(aes(xintercept = mean(count)), color = "red", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = mean(count) - sd(count)), color = "blue", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = mean(count) + sd(count)), color = "blue", linetype = "dashed", size = 1)
+```
+
+### Task 6: Describe your results
+
+Is the distribution normal or skewed in one direction? Write a sentence in which you describe the range of the data covered by one standard deviation from the mean on both sides - how much of the data falls in that range?
+
+
+**Answer**: The distribution is left-skewed, with the mean falling around 12.7. With the standard deviation being 4.2, every data point between 8.5 and 16.9 falls within one standard deviation of the mean. 68% of data falls within one standard deviation of the mean for a normal distribution. This distribution is skewed, but not heavily sekwed, so around 68% of the data likely falls within the one standard deviation range.   
+
+
+
+
+When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
+
+Congrats!
+
+
