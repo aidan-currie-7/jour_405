@@ -158,21 +158,21 @@ Based on our analysis, we can now answer:
 
 1. Is there a significant difference in SAT scores across college types?
 
-ANSWER: Yes, SAT scores of community college students are significantly lower than that of both private and public schools. There's also a fair difference between public and private schools, at an average of 74 points, but the pails in comaprison to the three-figure difference between community colleges and four-year universities. Overall, the differences between each, reveal the general academic threshold of each type of institution.   
+ANSWER: Yes, SAT scores of community college students are significantly lower than that of both private and public schools on the surface. But based on the p-values, the difference between private and public schools is actually far more significant.   
 
 2. Which specific college types differ from each other?
 
-ANSWER: Private and Public institutions clearly differ from community. The differences in mean value, lowest value, and highest value between private and public are clear, but relative to the other two categories, they're fairly small. As a result, private and public institutions hold more academic prestige than community colleges, in regard to test scores.    
+ANSWER: Private and Public institutions clearly differ from community, at least in regard to their apperance. The differences in mean value, lowest value, and highest value between private and public are clear, but relative to the other two categories, they're fairly small. As a result, private and public institutions hold more academic prestige than community colleges, in regard to test scores.    
 
 3. How large are these differences?
 
-ANSWER: The largest difference is between private and community colleges, with an average score differential of around 367. The differnce between public and community scores is similarly in the three figures, while the seperation between private and public is under 100. 
+ANSWER: The largest difference (purely from a numbers standpoints) is between private and community colleges, with an average score differential of around 367. The differnce between public and community scores is similarly in the three figures, while the seperation between private and public is under 100. 
 
 Answer those questions, providing evidence for your answers, and then write a headline and a lead paragraph reporting these findings using active voice and focusing on the differences across types.
 
-HL: Examining the SAT score gap between four-year and community colleges 
+HL: Why SAT scores across different college types may be misleading 
 
-lead: Four-year universities are often considered more prestigious than community colleges. It's an assumption that some consider unfair, but test scores support that belief. 
+lead: Four-year universities are often considered more prestigious than community colleges. On the surface, test scores support that belief. But a deeper look at the numbers reveals otherwise.  
 
-Students attending private and public universities nationwide entered with average SAT scores of 1435 and 1361, respectively. That figure languished at 1068 for community college students -- a statistically significant difference, based on recent analysis.      
+Students attending private and public universities nationwide entered with average SAT scores of 1435 and 1361, respectively. That figure languished at 1068 for community college students, though a recent analysis reveals that the difference between public and private universities is more signifigant, despite the slimmer margin.      
 
